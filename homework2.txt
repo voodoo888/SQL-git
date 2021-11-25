@@ -1,0 +1,61 @@
+
+C:\Users\Voodoo\Documents\mysql_dump>mysqldump example > C:\Users\Voodoo\Documents\mysql_dump\example_dump.sql
+
+C:\Users\Voodoo\Documents\mysql_dump>mysql sample < example_dump.sql
+ERROR 1049 (42000): Unknown database 'sample'
+
+C:\Users\Voodoo\Documents\mysql_dump>mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 44
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database sample;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> sample < example_dump.sql
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sample < example_dump.sql' at line 1
+mysql> sample < example_dump.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sample < example_dump.sql' at line 1
+mysql> ^Z
+Bye
+
+C:\Users\Voodoo\Documents\mysql_dump>mysql sample < example_dump.sql
+
+C:\Users\Voodoo\Documents\mysql_dump>mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 46
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> describe sample;
+ERROR 1046 (3D000): No database selected
+mysql> use sample;
+Database changed
+mysql> describe sample;
+ERROR 1146 (42S02): Table 'sample.sample' doesn't exist
+mysql> describe users;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int unsigned | YES  |     | NULL    |       |
+| name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql>
