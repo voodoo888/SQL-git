@@ -1,0 +1,167 @@
+mysql>
+mysql> create user 'user888'@'localhost' identified by 'some';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant select, show view on shop.* to 'user888'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> exit
+Bye
+
+C:\Users\Voodoo>mysql -u user888 -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 51
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select user();
++-------------------+
+| user()            |
++-------------------+
+| user888@localhost |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| shop               |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> use shop;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_shop       |
++----------------------+
+| accounts             |
+| cat                  |
+| cat_name             |
+| cat_reverse          |
+| catalogs             |
+| cities               |
+| discounts            |
+| flights              |
+| namecat              |
+| orders               |
+| orders_products      |
+| prod                 |
+| products             |
+| rubrics              |
+| storehouses          |
+| storehouses_products |
+| tbl1                 |
+| users                |
++----------------------+
+18 rows in set (0.00 sec)
+
+mysql> select * from tbl1;
++----+----------+------------+
+| id | name     | created_at |
++----+----------+------------+
+|  3 | Victory  | 2018-08-16 |
+|  4 | Svetlana | 2018-08-17 |
+|  6 | Bred     | 2018-08-09 |
+|  7 | Kiota    | 2018-08-15 |
+|  8 | Funtex   | 2018-08-13 |
++----+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into tbl1 (name, created_at) values
+    -> ('seva','2012-07-02');
+ERROR 1142 (42000): INSERT command denied to user 'user888'@'localhost' for table 'tbl1'
+mysql> exit
+Bye
+
+C:\Users\Voodoo>mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 52
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show user()
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'user()' at line 1
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> create user 'shop'@'localhost' identified by '';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant all on shop.* to 'shop'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> exit
+Bye
+
+C:\Users\Voodoo>mysql -u shop
+ERROR 1045 (28000): Access denied for user 'shop'@'localhost' (using password: YES)
+
+C:\Users\Voodoo>mysql -u shop -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 54
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| shop@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> use shop;
+Database changed
+mysql> insert into tbl1 (name, created_at) values
+    -> ('seva','2012-07-02');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tbl1;
++----+----------+------------+
+| id | name     | created_at |
++----+----------+------------+
+|  3 | Victory  | 2018-08-16 |
+|  4 | Svetlana | 2018-08-17 |
+|  6 | Bred     | 2018-08-09 |
+|  7 | Kiota    | 2018-08-15 |
+|  8 | Funtex   | 2018-08-13 |
+|  9 | seva     | 2012-07-02 |
++----+----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+
+C:\Users\Voodoo>
