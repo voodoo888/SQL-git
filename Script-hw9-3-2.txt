@@ -1,0 +1,23 @@
+-- SELECT * FROM products;
+-- INSERT INTO products (price) VALUES (3000);
+-- SELECT * FROM products;
+delimiter //
+CREATE TRIGGER products_in BEFORE INSERT ON products
+FOR EACH ROW 
+BEGIN 
+	IF NEW.name IS NULL AND NEW.desription IS NULL THEN 
+	SIGNAL SQLSTATE '45000' SET message_text = 'Not null for name and desriptions';
+	END IF;
+END//
+delimiter ;
+-- INSERT INTO products (price) VALUES (3000);
+delimiter //
+CREATE TRIGGER products_upd BEFORE UPDATE ON products
+FOR EACH ROW 
+BEGIN 
+	IF NEW.name IS NULL AND NEW.desription IS NULL THEN 
+	SIGNAL SQLSTATE '45000' SET message_text = 'Not null for name and desriptions';
+	END IF;
+END//
+delimiter ;
+-- INSERT INTO products (price) VALUES (3000);

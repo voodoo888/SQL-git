@@ -1,0 +1,22 @@
+DELIMITER //
+DROP FUNCTION IF EXISTS fibonacci //
+CREATE FUNCTION fibonacci (x int)
+RETURNS INT DETERMINISTIC
+BEGIN 
+	DECLARE x1 INT DEFAULT 1;
+	DECLARE x2 INT DEFAULT 1;
+	DECLARE total INT DEFAULT 0; 
+		IF x = 2 THEN SET total = 1;
+		ELSEIF x = 1 THEN SET total = 1;
+		END IF;
+		WHILE x >= 3  DO
+			SET total = x2 + x1;
+			SET x1 = x2;
+			SET x2 = x2 + (total-x2);
+			SET x = x - 1; 
+		END WHILE;
+		RETURN total;
+END//
+
+delimiter ;
+SELECT fibonacci(3);
